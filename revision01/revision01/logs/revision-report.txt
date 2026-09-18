@@ -1,0 +1,8 @@
+Linux CLI Revision Report
+User: codespace
+Host: codespaces-1a4694
+Directory: /workspaces/scripting-for-cybersecurity/revision01/revision01/logs
+Shell: /bin/bash
+Python: /home/codespace/.python/current/bin/python3
+Environment variables: 93
+Python-related filenames: 6
