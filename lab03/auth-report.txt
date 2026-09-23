@@ -1,0 +1,15 @@
+Authentication Analysis
+
+Failed Password Events: 124
+Accepted Password Events: 57
+Total Events: 184
+Invalid User Events: 0
+
+Failed Login Sources:
+     39 admin
+     35 root
+     18 guest
+     13 test
+     13 backup
+      5 oracle
+      1 invalid
