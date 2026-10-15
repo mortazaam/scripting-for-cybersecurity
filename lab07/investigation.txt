@@ -1,0 +1,23 @@
+Lab 7 Findings
+
+Accounts targeted by failed logins, checked with account_source.sh:
+admin, root, guest, test, backup, oracle - these are generic account names,
+not real staff names. That suggests the attacker was guessing standard
+names rather than using inside knowledge of the organisation.
+
+Legacy accounts found only in the old backup list are the most dangerous
+if they still exist on the server, because nobody is monitoring them and
+they may still have old permissions.
+
+Config findings from debug_check.sh and tls_check.sh:
+the backup configuration has debug mode on. Debug in production exposes
+stack traces and internal paths, and sometimes credentials, in error pages.
+Some configs do not mention TLS at all, which means traffic may not be
+encrypted.
+
+port_check.sh showed config-old.txt uses port 80 and config-new.txt uses
+443. Both are privileged ports (under 1024) so only root can bind them.
+
+The accounts with plaintext passwords stored on the workstation and
+successful logins are worth reporting together - that combination is the
+most likely way the attacker got in.

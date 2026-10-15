@@ -1,0 +1,23 @@
+cd ../lab08
+Lab 8 Findings
+
+IP check results using check_ip.sh with grep -wF:
+
+198.51.100.77 made 8 failed login attempts but is NOT in the IOC list.
+That shows the IOC list only contains what somebody already reported.
+A new attacker will not be on it, so I cannot rely on the list alone.
+
+203.0.113.200 IS in the IOC list. The firewall blocked it on port 3389,
+which is RDP (Windows Remote Desktop). But auth.log shows it attacking
+SSH on port 22. So one door was closed and it walked through another.
+
+203.0.113.77 appears in access.log but not auth.log. Looking at its
+requests it was scanning web paths rather than trying SSH.
+
+Why "not found" has its own exit code (3): a caller needs to tell the
+difference between "the search ran and found nothing" 
+
+Why grep -wF matters: searching for 203.0.113.1 with plain grep matches
+203.0.113.10 and 203.0.113.100 because it is a substring, and the dots
+match any character in a regex. -F makes dots literal and -w forces a
+whole-word match

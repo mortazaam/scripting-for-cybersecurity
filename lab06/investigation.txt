@@ -1,0 +1,23 @@
+Lab 6 Findings
+
+1. Running attacker_report.sh on the collected auth.log and on the full
+server log gave different rankings. The collected log only covers about
+08:00 to 08:46, but the server log runs past 10:00. So the collected copy
+was taken before the attack finished. If I had only used the collected log
+I would have named the wrong top attacker.
+
+2. The username list from the server log includes the word "invalid".
+That is not a real username. On lines that say "Failed password for invalid
+user bob" the word straight after "for" is "invalid", so my awk pipeline
+picked that up. The pipeline is doing exactly what I told it to - the log
+format is just inconsistent.
+
+3. For access.log the output is not wrong, it is just meaningless. A web
+log has no "Failed password" lines so everything comes back zero. The script
+should check the log type first, or only be run on auth logs.
+
+4. Two of the top SSH attackers appear in firewall BLOCK lines but still
+show up in auth.log. Two explanations: the firewall rule was added after
+the attempts happened, or they reached SSH by a different route such as
+another port or a compromised internal host.
+
