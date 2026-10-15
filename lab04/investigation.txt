@@ -1,0 +1,18 @@
+Lab 4 Findings
+
+The file command showed that suspicious.dat is actually an ELF executable,
+not a data file. The name is misleading. I did not run it.
+
+image.png, archive.zip and the .txt files all matched what their names said.
+
+empty.bin is 0 bytes.
+
+grep -rl found "admin" in the config files and the logs.
+passwords.txt contains plaintext credentials, which is a serious finding
+on its own - credentials should never be stored in a readable file.
+
+diff -u showed the port changed between config-old.txt and config-new.txt
+from 80 (HTTP) to 443 (HTTPS). That change is an improvement.
+
+The main lesson is that a file extension is only a claim. The file command
+reads the actual content, which is how the disguised executable was found.

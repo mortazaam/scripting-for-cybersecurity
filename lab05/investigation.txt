@@ -1,0 +1,15 @@
+Lab 5 Findings
+
+1. Comparing my manual Lab 4 report with the automated triage-report-auto.txt,
+the automated one is the correct one where they differ. A command counting
+files cannot miscount. When I did it by hand I had to copy numbers across
+and that is where mistakes happen.
+
+2. If the collection was replaced tomorrow I would only change one line -
+CASE_DIR at the top of triage.sh. With the Lab 4 approach I would have to
+retype every command and copy every number again.
+
+3. The report tells me suspicious.dat is an ELF executable. The filename
+only says "data". The detected type contradicts the name, which is the
+kind of mismatch worth investigating.
+
