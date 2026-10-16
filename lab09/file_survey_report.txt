@@ -1,0 +1,75 @@
+=== case/evidence/archive.zip
+  size   : 138 bytes
+  type   : Zip archive data, at least v2.0 to extract, compression method=deflate
+  sha256 : 4c25603189da855a2e0ce4704cceead19644a3378c15ce154773534be9e67040
+=== case/evidence/empty.bin
+  size   : 0 bytes
+  type   : empty
+  sha256 : e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+=== case/evidence/image.png
+  size   : 66 bytes
+  type   : PNG image data, 1 x 1, 8-bit/color RGBA, non-interlaced
+  sha256 : 62d7693d527ce6e5cf4a4f54478b889fe3e01a144d09a0a0482ca512d4225b3a
+=== case/evidence/inventory.txt
+  size   : 32 bytes
+  type   : ASCII text
+  lines  : 3
+  sha256 : 181c88f746f8fc2818581f25efc81998a2eb17de1e55ef494250fabce2e777b4
+=== case/evidence/notes.txt
+  size   : 64 bytes
+  type   : ASCII text
+  lines  : 2
+  sha256 : 8ec8ceec9c70cf7c7934f6ed0832ea0609e9cff50d4f871cc8332223e5cf30cb
+=== case/evidence/passwords.txt
+  size   : 33 bytes
+  type   : ASCII text
+  lines  : 2
+  sha256 : eddfa3ed00f03f2000f32dc9df2c3c23705612880d60510ef862885969f9d44f
+=== case/evidence/suspicious.dat
+  size   : 132 bytes
+  type   : ELF, unknown class 154
+  sha256 : e1105562d3473531bf8157f2f95837c606bcfdca3b098026a2aceec4d3c783c0
+=== case/evidence/users.old
+  size   : 18 bytes
+  type   : ASCII text
+  lines  : 3
+  sha256 : b08de9d05fea32d4488215973e4789ae04698b2dbea1d31139011a20a4cd0bb2
+=== case/scripts/check.sh
+  size   : 35 bytes
+  type   : Bourne-Again shell script, ASCII text executable
+  lines  : 2
+  sha256 : e51a9378b524ebe982851a380e5929b7f0bfc4d171ab956f06e30383d7ac0892
+=== case/scripts/scan.py
+  size   : 87 bytes
+  type   : ASCII text
+  lines  : 3
+  sha256 : 297f24d229cf5b5e57ba604eb11ccb170c2d0bf14da327d8172614928939a132
+  !! FLAG: expected Python
+=== case/logs/access.log
+  size   : 7915 bytes
+  type   : ASCII text
+  lines  : 80
+  sha256 : e166e9a99ec7169f5a85791447d3b4679e18102f86748add7c5a7f98b3f2c8dd
+  IOCs   : 2 indicator(s) present
+=== case/logs/auth.log
+  size   : 17612 bytes
+  type   : ASCII text
+  lines  : 184
+  sha256 : a56d83352727c61634fc96b7bd2339bda5b0a29d38f0a433da6b7a8f9e202e32
+  IOCs   : 3 indicator(s) present
+=== case/logs/firewall.log
+  size   : 180 bytes
+  type   : ASCII text
+  lines  : 5
+  sha256 : 0c6ee9f39d3cbf98100f14dad8a00910fd2010dc0fd153dd0ae8aa31696370b7
+  IOCs   : 3 indicator(s) present
+=== case/logs/old.log
+  size   : 17 bytes
+  type   : ASCII text
+  lines  : 1
+  sha256 : cdff3cccf0863ad43f7f37e100f93570539070534908048f48f76b1d8c843537
+  IOCs   : 0 indicator(s) present
+
+Files surveyed : 14
+Files flagged  : 1
+Total IOC hits : 8

@@ -1,0 +1,52 @@
+LAB 9 - INVESTIGATION NOTES
+
+LOGIN ACTIVITY
+124 failed password attempts and 57 accepted logins, all recorded in auth.log.
+access.log and firewall.log contain no login attempts - different log type.
+
+CONFIGURATION
+config.old uses port 80 (unencrypted) with debug=true.
+Live configs use port 443 or 8080. The old backup is the weak one.
+
+IOC SWEEP
+3 of the 7 indicators matched: 203.0.113.10, 198.51.100.24, 203.0.113.200.
+The 3 domains and the MD5 hash matched nothing in these logs - wrong
+indicator type for log data, not evidence of absence.
+
+CORRELATION
+203.0.113.10 and 198.51.100.24 appear in all 3 logs.
+203.0.113.200 appears in 2 (auth and firewall).
+The firewall records one decision per IP while auth.log records every
+single attempt, which is why counts differ.
+
+GAPS IN THE IOC LIST
+Four active attackers are NOT in the IOC list:
+  198.51.100.77 - 15 SSH failures
+  203.0.113.15  - 11 SSH failures
+  198.51.100.99 - 10 web requests
+  203.0.113.77  - 12 web requests
+192.168.1.20 and 192.168.1.35 are internal staff traffic.
+
+FILE INTEGRITY
+sha256 baselines were taken for all evidence files.
+A test copy was altered by one word and sha256sum -c flagged exactly that
+file as FAILED while the others verified OK.
+No evidence file matched the MD5 hash in the IOC list.
+
+EXTENSION VS CONTENT
+suspicious.dat is an ELF executable, confirmed by its magic bytes 177 E L F.
+A .dat extension claims data; the content is a runnable Linux program.
+This is deliberate disguise and is the main finding of the lab.
+scan.py was flagged only because it has no shebang line, so file reports
+plain ASCII text. That is a limitation of the check, not tampering.
+
+SURVEY TOTALS
+14 files surveyed, 1 flagged as a type mismatch, 8 IOC hits across the logs.
+auth.log is the largest log at 184 lines and holds 3 indicators.
+old.log holds none.
+
+CONCLUSION
+The IOC list is incomplete, an insecure legacy config is present, and an
+executable is hidden under a data file extension.
+o
+x

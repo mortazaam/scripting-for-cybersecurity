@@ -1,0 +1,6 @@
+192.168.1.20 (11 requests): NOT in IOC list
+192.168.1.35 (7 requests): NOT in IOC list
+198.51.100.24 (19 requests): in IOC list
+198.51.100.99 (10 requests): NOT in IOC list
+203.0.113.10 (21 requests): in IOC list
+203.0.113.77 (12 requests): NOT in IOC list
