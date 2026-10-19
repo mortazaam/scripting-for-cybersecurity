@@ -1,0 +1,23 @@
+=== case/logs/firewall.log ===
+  lines         : 5
+  failed logins : 0
+  IOC matches   : 3
+  note          : stopped early after 3 matches
+
+=== case/logs/auth.log ===
+  lines         : 184
+  failed logins : 124
+  IOC matches   : 3
+  note          : stopped early after 3 matches
+
+=== case/logs/access.log ===
+  lines         : 80
+  failed logins : 0
+  IOC matches   : 2
+
+=== case/nested/archive/old.log ===
+  lines         : 1
+  failed logins : 0
+  IOC matches   : 0
+
+TOTAL IOC matches across all logs: 8

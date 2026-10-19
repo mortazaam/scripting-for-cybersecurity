@@ -1,0 +1,49 @@
+LAB 10 - INVESTIGATION NOTES
+
+1. EXIT CODE
+scan_all.sh exited with code 1, which matches the report: at least one
+indicator matched. A clean collection would have given 0.
+
+2. LOGS AND COUNTS
+Four logs scanned:
+  firewall.log  - 5 lines,   0 failed logins, 3 IOC matches
+  auth.log      - 184 lines, 124 failed logins, 3 IOC matches
+  access.log    - 80 lines,  0 failed logins, 2 IOC matches
+  old.log       - 1 line,    0 failed logins, 0 IOC matches
+Total: 8 matches.
+Lab 9 saw only three of these. case/logs/*.log cannot look inside
+subfolders, so the archived log was missed. find walks the whole tree.
+
+3. THE EARLY BREAK
+It triggered on firewall.log and auth.log, both at 3 matches.
+Nothing was missed - check_iocs.sh, which does not break, reported the
+same 3 for each. If a log had held 4 or more, the break would have hidden
+the rest. It saves time but can under-report.
+
+4. WHY THE EXIT CODE MATTERS
+Running nightly with nobody watching, nobody reads the report. Another
+program can read the exit code and raise an alarm on its own.
+
+5. OTHER FINDINGS
+Only 3 of the 7 indicators are relevant to these logs.
+Blocks were on port 22 (SSH) and 3389 (RDP). My counters only covered
+22, 80 and 443, so the RDP block went uncounted.
+Of 8 accounts, three are disabled: david, frank, heidi. eve is the only
+one in Security.
+Searching for "password" found case/evidence/passwords.txt - a content
+search finds what a filename search does not.
+
+6. A BUG I FIXED
+Every log reported 40 lines. I had used the name LINES, which bash uses
+for terminal height. Renaming it to LINECOUNT fixed it. Avoid names bash
+reserves: LINES, COLUMNS, PATH, HOME, USER, PWD, IFS, RANDOM.
+
+7. WHAT I LEARNED
+for is for a list you already know; while carries on until something
+changes.
+for $(cat file) shreds lines at spaces; while IFS= read -r keeps them whole.
+A pipe into a loop makes a subshell, so counters are lost. Use done < <(cmd).
+An invisible carriage return makes identical-looking values compare as
+different.
+A file with no final newline loses its last line unless you add
+|| [ -n "$LINE" ].
