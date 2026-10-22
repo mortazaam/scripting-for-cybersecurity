@@ -7,3 +7,10 @@ Python3 location: /home/codespace/.python/current/bin/python3
 Bash location: /usr/bin/bash
 Number of environment variables: 92
 SSH filenames in /usr/bin: 7
+WHAT THIS TELLS ME
+I am running as the user "codespace" in a container, not as root, so I have
+limited permissions by default - that is the safer way to work.
+There are 7 ssh-related programs in /usr/bin, which means this machine can
+both connect out over SSH and be connected to.
+Knowing the shell, the home directory and the environment variable count
+matters because scripts behave differently depending on all three.

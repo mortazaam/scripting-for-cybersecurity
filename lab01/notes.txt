@@ -1,0 +1,13 @@
+
+LAB 1 - DEVELOPMENT ENVIRONMENT
+
+Set up the GitHub Codespace and this repository.
+
+hello.py and student.py both use input() to collect text from the user and
+print() to display it back. Everything input() returns is a string, so if I
+ever need to do arithmetic on an answer I would have to convert it with int()
+first.
+
+The main thing I learned is that the environment has to work before any of
+the security work can start - editor, terminal, Python and git all talking to
+each other.

@@ -1,4 +1,3 @@
-cd ../lab08
 Lab 8 Findings
 
 IP check results using check_ip.sh with grep -wF:

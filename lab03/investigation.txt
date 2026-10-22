@@ -1,3 +1,4 @@
+
 Investigation Findings
 1. IP with most failed SSH logins:
      51 203.0.113.10
@@ -331,3 +332,37 @@ Sep 20 10:05:52 server sshd[2004]: Invalid user support from 203.0.113.200 port 
 198.51.100.24 - - [20/Sep/2026:09:45:37 +0100] "GET /wp-login.php HTTP/1.1" 404 3496 "-" "curl/8.4.0"
 192.168.1.20 - - [20/Sep/2026:09:48:07 +0100] "GET /wp-login.php HTTP/1.1" 404 10376 "-" "curl/8.4.0"
 203.0.113.10 - - [20/Sep/2026:09:49:47 +0100] "GET /index.html HTTP/1.1" 404 7706 "-" "curl/8.4.0"
+LAB 3 - INVESTIGATION FINDINGS
+
+WHAT THE LOGS SHOW
+auth.log holds 184 events: 124 failed passwords, 57 accepted, 3 invalid user.
+access.log holds 220 web requests.
+
+WHO
+203.0.113.10 is the single worst source. It made 51 failed SSH logins and
+62 web requests - it is top of both lists, so the same host attacked both
+the login service and the website.
+198.51.100.24 is the second SSH source.
+
+WHAT THEY WERE AFTER
+"admin" was the most targeted username, tried 39 times. The accounts being
+guessed are generic names, not real staff names, which points at a standard
+wordlist rather than inside knowledge.
+On the web side: 29 requests to /admin and 9 to /.env. A .env file holds
+application secrets, so that is credential hunting, not browsing.
+
+SIGNS IT WAS AUTOMATED
+60 requests identify themselves as sqlmap, an automated SQL injection tool.
+37 responses were 404 and 34 were 403 - a human does not generate that many
+misses in a row. This was a tool walking a list of paths.
+
+IOC MATCHES
+The indicator list matched 203.0.113.10 and 198.51.100.24 in auth.log.
+
+WHAT I TAKE FROM IT
+The failures matter more than the successes here. 124 failed logins against
+generic usernames from one IP is a brute force attempt, and the same IP
+scanning the website at the same time means it was one coordinated effort
+against two different doors.
+
+--- SUPPORTING EVIDENCE BELOW ---
