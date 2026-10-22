@@ -1,7 +1,7 @@
-name =input  ("what is your name?")
-student_ID =input  ("what is your student number?")
-year  =input ("what year are you in?")
+name = input("What is your name? ")
+student_id = input("What is your student number? ")
+year = input("What year are you in? ")
 
-print (" hello, ",name)
-print ("your student number is", student_ID)
-print ("year", year)
+print("Name:", name)
+print("Student Number:", student_id)
+print("Year:", year)

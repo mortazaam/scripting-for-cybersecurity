@@ -1,0 +1,28 @@
+LAB 2 - PART 29 KNOWLEDGE CHECK
+
+1. What command displays your current working directory?
+   pwd - print working directory.
+
+2. What does .. represent?
+   The parent directory, one level up from where you are now.
+
+3. Difference between > and >>?
+   > writes output to a file and replaces whatever was in it.
+   >> adds output to the end and keeps what was already there.
+
+4. What does | do?
+   It is a pipe. It sends the output of the command on the left into the
+   command on the right, so they can be chained together.
+
+5. Difference between echo "$USER" and echo '$USER'?
+   Double quotes expand the variable, so it prints the username.
+   Single quotes are literal, so it prints the text $USER itself.
+
+6. Explain ls /usr/bin | grep python | wc -l
+   List everything in /usr/bin, keep only the lines containing "python",
+   then count how many lines are left. Three small commands doing one job.
+
+7. Why is cd ~ not a good place for coursework in Codespaces?
+   ~ is the Codespaces user's home directory, which is outside the git
+   repository. Anything saved there is not tracked by git and will not
+   be pushed to GitHub, so it would be lost and would never be marked.
