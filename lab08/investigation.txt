@@ -1,22 +1,55 @@
 Lab 8 Findings
 
-IP check results using check_ip.sh with grep -wF:
+EXERCISE 3.1 - IP PRESENCE TABLE (check_ip.sh, nine runs)
 
-198.51.100.77 made 8 failed login attempts but is NOT in the IOC list.
-That shows the IOC list only contains what somebody already reported.
-A new attacker will not be on it, so I cannot rely on the list alone.
+IP               auth.log      access.log    firewall.log
+203.0.113.10     FOUND (52)    FOUND (21)    FOUND (1)
+198.51.100.24    FOUND (38)    FOUND (19)    FOUND (1)
+203.0.113.200    FOUND (11)    not found     FOUND (1)
 
-203.0.113.200 IS in the IOC list. The firewall blocked it on port 3389,
-which is RDP (Windows Remote Desktop). But auth.log shows it attacking
-SSH on port 22. So one door was closed and it walked through another.
+Exit code was 0 for every FOUND, 3 for the not found, and 2 for
+case/logs/missing.log. That is the point of three separate codes - a caller
+can tell "nothing there" apart from "something broke".
 
-203.0.113.77 appears in access.log but not auth.log. Looking at its
-requests it was scanning web paths rather than trying SSH.
+Exercise 3.4: grep -c "203.0.113.1" auth.log returns a high count because
+203.0.113.1 is a substring of 203.0.113.10 and the dots match any character.
+check_ip.sh uses grep -cwF, so it reports 0 - the address itself never appears.
+PART 7 - investigate.sh RUNS
 
-Why "not found" has its own exit code (3): a caller needs to tell the
-difference between "the search ran and found nothing" 
+./investigate.sh case/logs/auth.log 198.51.100.77    exit 0
+  15 appearances, 15 failed, Risk HIGH, no firewall entries, NOT in IOC list.
 
-Why grep -wF matters: searching for 203.0.113.1 with plain grep matches
-203.0.113.10 and 203.0.113.100 because it is a substring, and the dots
-match any character in a regex. -F makes dots literal and -w forces a
-whole-word match
+./investigate.sh case/logs/auth.log 203.0.113.200    exit 0
+  11 appearances, 10 failed, Risk MEDIUM, LISTED in IOC list.
+  Firewall: BLOCK 203.0.113.200 -> 10.0.0.30:3389
+
+./investigate.sh case/logs/access.log 203.0.113.77   exit 0
+  12 appearances, 0 failed logins, Risk NONE, NOT in IOC list.
+
+./investigate.sh case/logs/auth.log admin            exit 0
+  39 failed, 0 accepted. Account: LEGACY - only in the old backup list.
+
+./investigate.sh case/logs/auth.log alice            exit 0
+  0 failed, 16 accepted. Account: CURRENT.
+
+./investigate.sh case/logs/missing.log admin         exit 2
+  Error printed to standard error, file does not exist.
+
+ANSWERS
+
+1. 198.51.100.77 made 15 failed attempts in this log and is NOT in the IOC
+list, and the firewall never saw it at all. So the worst-behaving address in
+the log is invisible to both the intelligence list and the firewall. An IOC
+list only holds what somebody already reported - it cannot find anything new.
+
+2. 203.0.113.200 was blocked by the firewall on port 3389, which is RDP
+(Remote Desktop Protocol). But auth.log shows it attacking SSH. One door was
+shut and it walked straight to another.
+
+3. 203.0.113.77 appears only in the web log, 12 requests, no login attempts
+at all. It was probing web paths rather than trying to log in - a different
+kind of attack against a different service.
+
+4. "admin" is a LEGACY account - it is not in the current user list, only in
+the old backup. 39 people-hours of guessing spent on an account that should
+not exist any more. Removing dead accounts removes the target.
